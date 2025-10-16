@@ -1,6 +1,6 @@
 /**                                            (⌐■_■)
 *  Author :    zero_speed                       /█\   GG...
-*  Created :   2025-10-03                      _/ \_ 
+*  Created :   2025-10-07                      _/ \_ 
 *  File :      Grid_Paths_I.cpp
 **/
 #include <bits/stdc++.h>
@@ -13,23 +13,35 @@ using namespace std;
 #define all(x) x.begin(), x.end()
 #define allr(x) x.rbegin(), x.rend()
 
-void dfs(int i, int j, vector<string>& scuar, vector<vector<int>>& dp, int n) {
-    if(i>=n || j>=n) return;
-    if(scuar[i][j]=='*') return;
-    
-    dp[i][j]++;
-    if(i==n-1 && j==n-1) return;
-    dfs(i+1, j, scuar, dp, n);
-    dfs(i, j+1, scuar, dp, n);
-}
-
 void solve() {
-    int n;
-    vector<string> scuar(n);
-    for(int i=0;i<n;i++) cin>>scuar[i];
-    vector<vector<int>> dp(n, vector<int>(n, 0));
-    dfs(0,0,scuar, dp, n);
-    cout<<dp[n-1][n-1]<<endl;
+    ll n;
+    cin >> n;
+    vector<vector<char>> arr(n + 1, vector<char>(n + 1));
+    vector<vector<ll>> dp(n + 1, vector<ll>(n + 1, 0));
+    ll MOD = 1e9 + 7;
+
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            cin >> arr[i][j];
+        }
+    }
+
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (arr[i][j] == '*') {
+                dp[i][j] = 0;
+                continue;
+            }
+            if (i == 1 && j == 1) {
+                dp[i][j] = 1;
+            } else {
+                
+                dp[i][j] = (dp[i - 1][j] + dp[i][j - 1]) % MOD;
+            }
+        }
+    }
+    cout << dp[n][n] << endl;
+
 }
 
 int main() {
