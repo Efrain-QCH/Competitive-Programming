@@ -21,7 +21,7 @@ int main() {
     fastio;
     int t = 1;
     cin >> t;
-    while (t--) {
+    while (t--) {s
         solve();
     }
     return 0;
